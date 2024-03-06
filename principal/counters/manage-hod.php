@@ -107,10 +107,10 @@
                 <div class="row align-items-center">
                     <div class="col-sm-6">
                         <div class="breadcrumbs-area clearfix">
-                            <h4 class="page-title pull-left">hod Section</h4>
+                            <h4 class="page-title pull-left">Admin Section</h4>
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="dashboard.php">Home</a></li>
-                                <li><span>hod Admin</span></li>
+                                <li><span>Manage Admin</span></li>
                                 
                             </ul>
                         </div>
@@ -153,7 +153,7 @@
 
                             <div class="card-body">
                                 <div class="data-tables datatable-dark">
-                                <center><a href="add-admin.php" class="btn btn-sm btn-info">Add New hod</a></center>
+                                <center><a href="add-hod.php" class="btn btn-sm btn-info">Add New HOD</a></center>
                                     <table id="dataTable3" class="table table-striped table-hover text-center">
                                         <thead class="text-capitalize">
                                             <tr>
@@ -183,7 +183,7 @@
                                             <td><?php echo htmlentities($result->email);?></td>
                                             <td><?php echo htmlentities($result->updationDate);?></td>
 
-                                            <td><a href="manage-admin.php?del=<?php echo htmlentities($result->id);?>" onclick="return confirm('Do you want to delete');"> <i class="fa fa-trash" style="color:red"></i></a></td>
+                                            <td><a href="manage-hod.php?del=<?php echo htmlentities($result->id);?>" onclick="return confirm('Do you want to delete');"> <i class="fa fa-trash" style="color:red"></i></a></td>
                                         </tr>
                                          <?php $cnt++;} }?>
                                     </tbody>

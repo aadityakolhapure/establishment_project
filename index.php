@@ -1,36 +1,32 @@
 <?php
-    session_start();
-    error_reporting(0);
-    include('includes/dbconn.php');
-    if(isset($_POST['signin']))
-    {
-        $uname=$_POST['username'];
-        $password=md5($_POST['password']);
-        $sql ="SELECT EmailId,Password,Status,id FROM tblemployees WHERE EmailId=:uname and Password=:password";
-        $query= $dbh -> prepare($sql);
-        $query-> bindParam(':uname', $uname, PDO::PARAM_STR);
-        $query-> bindParam(':password', $password, PDO::PARAM_STR);
-        $query-> execute();
-        $results=$query->fetchAll(PDO::FETCH_OBJ);
+session_start();
+error_reporting(0);
+include('includes/dbconn.php');
+if (isset($_POST['signin'])) {
+    $uname = $_POST['username'];
+    $password = md5($_POST['password']);
+    $sql = "SELECT EmailId,Password,Status,id FROM tblemployees WHERE EmailId=:uname and Password=:password";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':uname', $uname, PDO::PARAM_STR);
+    $query->bindParam(':password', $password, PDO::PARAM_STR);
+    $query->execute();
+    $results = $query->fetchAll(PDO::FETCH_OBJ);
 
-        if($query->rowCount() > 0)
-        {
-            foreach ($results as $result) {
-                $status=$result->Status;
-                $_SESSION['eid']=$result->id;
+    if ($query->rowCount() > 0) {
+        foreach ($results as $result) {
+            $status = $result->Status;
+            $_SESSION['eid'] = $result->id;
         }
-            if($status==0)
-        {
-            $msg="In-Active Account. Please contact your administrator!";
-        } else  {
-            $_SESSION['emplogin']=$_POST['username'];
+        if ($status == 0) {
+            $msg = "In-Active Account. Please contact your administrator!";
+        } else {
+            $_SESSION['emplogin'] = $_POST['username'];
             echo "<script type='text/javascript'> document.location = 'staff/dashboard.php'; </script>";
         }
-            }   else  {
-                echo "<script>alert('Sorry, Invalid Details.');</script>";
-                }
-
+    } else {
+        echo "<script>alert('Sorry, Invalid Details.');</script>";
     }
+}
 
 ?>
 
@@ -74,7 +70,7 @@
                     <div class="login-form-head">
                         <h4>Staff Login Panel</h4>
                         <p>establishment Section System</p>
-                        <?php if($msg){?><div class="errorWrap"><strong>Error</strong> : <?php echo htmlentities($msg); ?> </div><?php }?>
+                        <?php if ($msg) { ?><div class="errorWrap"><strong>Error</strong> : <?php echo htmlentities($msg); ?> </div><?php } ?>
                     </div>
                     <div class="login-form-body">
                         <div class="form-gp">
@@ -99,6 +95,7 @@
                             <div class="col-6 text-right">
                                 <a href="password-recovery.php">Forgot Password?</a>
                             </div>
+                            
                         </div>
                         <div class="submit-btn-area">
                             <button id="form_submit" type="submit" name="signin">Login <i class="ti-arrow-right"></i></button>
@@ -128,7 +125,7 @@
     <script src="assets/js/metisMenu.min.js"></script>
     <script src="assets/js/jquery.slimscroll.min.js"></script>
     <script src="assets/js/jquery.slicknav.min.js"></script>
-    
+
     <!-- others plugins -->
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/scripts.js"></script>

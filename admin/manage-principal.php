@@ -5,30 +5,15 @@ include('../includes/dbconn.php');
 if (strlen($_SESSION['alogin']) == 0) {
     header('location:index.php');
 } else {
-
-    //Inactive  Employee    
-    if (isset($_GET['inid'])) {
-        $id = $_GET['inid'];
-        $status = 0;
-        $sql = "UPDATE tblemployees set Status=:status  WHERE id=:id";
+    if (isset($_GET['del'])) {
+        $id = $_GET['del'];
+        $sql = "DELETE from  principal  WHERE id=:id";
         $query = $dbh->prepare($sql);
         $query->bindParam(':id', $id, PDO::PARAM_STR);
-        $query->bindParam(':status', $status, PDO::PARAM_STR);
         $query->execute();
-        header('location:employees.php');
+        $msg = "The selected principal account has been deleted";
     }
 
-    //Activated Employee
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $status = 1;
-        $sql = "UPDATE tblemployees set Status=:status  WHERE id=:id";
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':id', $id, PDO::PARAM_STR);
-        $query->bindParam(':status', $status, PDO::PARAM_STR);
-        $query->execute();
-        header('location:employees.php');
-    }
 ?>
 
     <!doctype html>
@@ -37,7 +22,7 @@ if (strlen($_SESSION['alogin']) == 0) {
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Admin Panel - Staff Leave</title>
+        <title>Admin Panel - Employee Leave</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -80,8 +65,8 @@ if (strlen($_SESSION['alogin']) == 0) {
                 <div class="main-menu">
                     <div class="menu-inner">
                         <?php
-                        $page = 'employee';
-                        include '../includes/principal-sidebar.php';
+                        $page = 'manage-admin';
+                        include '../includes/admin-sidebar.php';
                         ?>
                     </div>
                 </div>
@@ -120,10 +105,10 @@ if (strlen($_SESSION['alogin']) == 0) {
                     <div class="row align-items-center">
                         <div class="col-sm-6">
                             <div class="breadcrumbs-area clearfix">
-                                <h4 class="page-title pull-left">Staff Section</h4>
+                                <h4 class="page-title pull-left">Principal Section</h4>
                                 <ul class="breadcrumbs pull-left">
                                     <li><a href="dashboard.php">Home</a></li>
-                                    <li><span>Staff Management</span></li>
+                                    <li><span>Manage Principal</span></li>
 
                                 </ul>
                             </div>
@@ -132,7 +117,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                         <div class="col-sm-6 clearfix">
                             <div class="user-profile pull-right">
                                 <img class="avatar user-thumb" src="../assets/images/admin.png" alt="avatar">
-                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Principal <i class="fa fa-angle-down"></i></h4>
+                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Admin <i class="fa fa-angle-down"></i></h4>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="logout.php">Log Out</a>
                                 </div>
@@ -165,22 +150,21 @@ if (strlen($_SESSION['alogin']) == 0) {
 
                                 <div class="card-body">
                                     <div class="data-tables datatable-dark">
-                                        <table id="dataTable3" class="table table-hover table-striped text-center">
+                                        <center><a href="add-principal.php" class="btn btn-sm btn-info">Add New Principal</a></center>
+                                        <table id="dataTable3" class="table table-striped table-hover text-center">
                                             <thead class="text-capitalize">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Name</th>
-                                                    <th>Staff ID</th>
-                                                    <th>Department</th>
-                                                    <th>Joined On</th>
-                                                    <th>Status</th>
+                                                    <th>Usermame</th>
+                                                    <th>Email ID</th>
+                                                    <th>Account Created On</th>
                                                     <th></th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
-
-                                                <?php
-                                                $sql = "SELECT EmpId,FirstName,LastName,Department,Status,RegDate,id from  tblemployees";
+                                                <?php $sql = "SELECT * from principal";
                                                 $query = $dbh->prepare($sql);
                                                 $query->execute();
                                                 $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -189,34 +173,16 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                     foreach ($results as $result) {               ?>
                                                         <tr>
                                                             <td> <?php echo htmlentities($cnt); ?></td>
+                                                            <td><?php echo htmlentities($result->fullname); ?></td>
+                                                            <td><?php echo htmlentities($result->UserName); ?></td>
+                                                            <td><?php echo htmlentities($result->email); ?></td>
+                                                            <td><?php echo htmlentities($result->updationDate); ?></td>
 
-                                                            <td><?php echo htmlentities($result->FirstName); ?>&nbsp;<?php echo htmlentities($result->LastName); ?></td>
-
-                                                            <td><?php echo htmlentities($result->EmpId); ?></td>
-
-                                                            <td><?php echo htmlentities($result->Department); ?></td>
-
-                                                            <td><?php echo htmlentities($result->RegDate); ?></td>
-
-                                                            <td><?php $stats = $result->Status;
-                                                                if ($stats) {
-                                                                ?>
-                                                                    <span class="badge badge-pill badge-success">Active</span>
-                                                                <?php } else { ?>
-                                                                    <span class="badge badge-pill badge-danger">Inactive</span>
-                                                                <?php } ?>
-
-
-                                                            </td>
-                                                            <td><a href="update-employee.php?empid=<?php echo htmlentities($result->id); ?>"><i class="fa fa-edit" style="color:green"></i></a>
-
+                                                            <td><a href="manage-principal.php?del=<?php echo htmlentities($result->id); ?>" onclick="return confirm('Do you want to delete');"> <i class="fa fa-trash" style="color:red"></i></a></td>
                                                         </tr>
                                                 <?php $cnt++;
                                                     }
                                                 } ?>
-
-
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -232,11 +198,12 @@ if (strlen($_SESSION['alogin']) == 0) {
                 <!-- row area start-->
             </div>
             <?php include '../includes/footer.php' ?>
+            <!-- footer area end-->
         </div>
         <!-- main content area end -->
 
 
-        <!-- footer area end-->
+
         </div>
         <!-- jquery latest version -->
         <script src="../assets/js/vendor/jquery-2.2.4.min.js"></script>

@@ -2,14 +2,14 @@
 session_start();
 error_reporting(0);
 include('../includes/dbconn.php');
-if (strlen($_SESSION['emplogin']) == 0) {
-    header('location:../index.php');
+if (strlen($_SESSION['hodlogin']) == 0) {
+    header('location:index.php');
 } else {
-    $eid = $_SESSION['emplogin'];
+    $eid = $_SESSION['hodlogin'];
     if (isset($_POST['update'])) {
 
-        $fname = $_POST['firstName'];
-        $lname = $_POST['lastName'];
+        $FirstName = $_POST['FirstName'];
+        $LastName = $_POST['LastName'];
         $gender = $_POST['gender'];
         $dob = $_POST['dob'];
         $department = $_POST['department'];
@@ -21,19 +21,19 @@ if (strlen($_SESSION['emplogin']) == 0) {
         $pan = $_POST['pan'];
         $caste = $_POST['caste'];
         $subcaste = $_POST['subcaste'];
-        $RegDate = $_POST['RegDate'];
+        $updationDate = $_POST['RegDate'];
         $ssc = $_POST['ssc'];
         $hsc = $_POST['hsc'];
         $grad = $_POST['grad'];
         $phd = $_POST['phd'];
-        $publication = $_POST['publication'];
-        $journal = $_POST['journal'];
-        $patent = $_POST['patent'];
-        $award = $_POST['award'];
-        $sql = "update tblemployees set FirstName=:fname,LastName=:lname,Gender=:gender,Dob=:dob,Department=:department,Address=:address,City=:city,Country=:country,Phonenumber=:mobileno,aadhar=:aadhar,pan=:pan,caste=:caste,subcaste=:subcaste,RegDate=:RegDate,ssc=:ssc,hsc=:hsc,grad=:grad,phd=:phd,publication=:publication,journal=:journal,patent=:patent,award=:award where EmailId=:eid";
+        // $publication = $_POST['publication'];
+        // $journal = $_POST['journal'];
+        // $patent = $_POST['patent'];
+        // $award = $_POST['award'];
+        $sql = "update hod set FirstName=:FirstName,LastName=:LastName,Gender=:gender,Dob=:dob,Department=:department,Address=:address,City=:city,Country=:country,Phonenumber=:mobileno,aadhar=:aadhar,pan=:pan,caste=:caste,subcaste=:subcaste,updationDate=:RegDate,ssc=:ssc,hsc=:hsc,grad=:grad,phd=:phd where EmailId=:eid";
         $query = $dbh->prepare($sql);
-        $query->bindParam(':fname', $fname, PDO::PARAM_STR);
-        $query->bindParam(':lname', $lname, PDO::PARAM_STR);
+        $query->bindParam(':FirstName', $FirstName, PDO::PARAM_STR);
+        $query->bindParam(':LastName', $LastName, PDO::PARAM_STR);
         $query->bindParam(':gender', $gender, PDO::PARAM_STR);
         $query->bindParam(':dob', $dob, PDO::PARAM_STR);
         $query->bindParam(':department', $department, PDO::PARAM_STR);
@@ -45,15 +45,15 @@ if (strlen($_SESSION['emplogin']) == 0) {
         $query->bindParam(':pan', $pan, PDO::PARAM_STR);
         $query->bindParam(':caste', $caste, PDO::PARAM_STR);
         $query->bindParam(':subcaste', $subcaste, PDO::PARAM_STR);
-        $query->bindParam(':RegDate', $RegDate, PDO::PARAM_STR);
+        $query->bindParam(':RegDate', $updationDate, PDO::PARAM_STR);
         $query->bindParam(':ssc', $ssc, PDO::PARAM_STR);
         $query->bindParam(':hsc', $hsc, PDO::PARAM_STR);
         $query->bindParam(':grad', $grad, PDO::PARAM_STR);
         $query->bindParam(':phd', $phd, PDO::PARAM_STR);
-        $query->bindParam(':publication', $publication, PDO::PARAM_STR);
-        $query->bindParam(':journal', $journal, PDO::PARAM_STR);
-        $query->bindParam(':patent', $patent, PDO::PARAM_STR);
-        $query->bindParam(':award', $award, PDO::PARAM_STR);
+        // $query->bindParam(':publication', $publication, PDO::PARAM_STR);
+        // $query->bindParam(':journal', $journal, PDO::PARAM_STR);
+        // $query->bindParam(':patent', $patent, PDO::PARAM_STR);
+        // $query->bindParam(':award', $award, PDO::PARAM_STR);
         $query->bindParam(':eid', $eid, PDO::PARAM_STR);
         $query->execute();
         $msg = "Your record has been updated Successfully";
@@ -102,34 +102,15 @@ if (strlen($_SESSION['emplogin']) == 0) {
             <div class="sidebar-menu">
                 <div class="sidebar-header">
                     <div class="logo">
-                        <a href="leave.php"><img src="../assets/images/icon/logo_w.png" alt="logo"></a>
+                        <a href="dashboard.php"><img src="../assets/images/icon/logo_w.png" alt="logo"></a>
                     </div>
                 </div>
                 <div class="main-menu">
                     <div class="menu-inner">
-                        <nav>
-                            <ul class="metismenu" id="menu">
-                                <li class="#">
-                                    <a href="dashboard.php" aria-expanded="true"><i class="ti-user"></i><span>Profile
-                                        </span></a>
-                                </li>
-                                <li class="#">
-                                    <a href="uploaddoc.php" aria-expanded="true"><i class="ti-user"></i><span>Upload documents
-                                        </span></a>
-                                </li>
-
-                                <li class="#">
-                                    <a href="leave.php" aria-expanded="true"><i class="ti-user"></i><span>Apply Leave
-                                        </span></a>
-                                </li>
-
-                                <li class="#">
-                                    <a href="leave-history.php" aria-expanded="true"><i class="ti-agenda"></i><span>View My Leave History
-                                        </span></a>
-                                </li>
-
-                            </ul>
-                        </nav>
+                        <?php
+                        $page = 'manage-leave';
+                        include '../includes/hod-sidebar.php';
+                        ?>
                     </div>
                 </div>
             </div>
@@ -202,7 +183,7 @@ if (strlen($_SESSION['emplogin']) == 0) {
 
                                                 <?php
                                                 $eid = $_SESSION['emplogin'];
-                                                $sql = "SELECT * from  tblemployees where EmailId=:eid";
+                                                $sql = "SELECT * from  hod where EmailId=:eid";
                                                 $query = $dbh->prepare($sql);
                                                 $query->bindParam(':eid', $eid, PDO::PARAM_STR);
                                                 $query->execute();
@@ -215,12 +196,12 @@ if (strlen($_SESSION['emplogin']) == 0) {
 
                                                         <div class="form-group">
                                                             <label for="example-text-input" class="col-form-label">First Name</label>
-                                                            <input class="form-control" name="firstName" value="<?php echo htmlentities($result->FirstName); ?>" type="text" required id="example-text-input">
+                                                            <input class="form-control" name="FirstName" value="<?php echo htmlentities($result->FirstName); ?>" type="text" required id="example-text-input">
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label for="example-text-input" class="col-form-label">Last Name</label>
-                                                            <input class="form-control" name="lastName" value="<?php echo htmlentities($result->LastName); ?>" type="text" autocomplete="off" required id="example-text-input">
+                                                            <input class="form-control" name="LastName" value="<?php echo htmlentities($result->LastName); ?>" type="text" autocomplete="off" required id="example-text-input">
                                                         </div>
 
                                                         <div class="form-group">
@@ -336,29 +317,7 @@ if (strlen($_SESSION['emplogin']) == 0) {
                                                             <input class="form-control" name="phd" type="tel" value="<?php echo htmlentities($result->phd); ?>" maxlength="10" autocomplete="off" required>
                                                         </div>
 
-                                                        <h5 class="header-title">Achievement</h5>
-                                                        <p class="text-muted font-14 mb-4">Write NA if there is no achievement</p>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Publication</label>
-                                                            <input class="form-control" name="publication" type="text" value="<?php echo htmlentities($result->publication); ?>" autocomplete="off" required>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Journals</label>
-                                                            <input class="form-control" name="journal" type="text" value="<?php echo htmlentities($result->journal); ?>" autocomplete="off" required>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">patent</label>
-                                                            <input class="form-control" name="patent" type="text" value="<?php echo htmlentities($result->patent); ?>" autocomplete="off" required>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Award</label>
-                                                            <input class="form-control" name="award" type="text" value="<?php echo htmlentities($result->award); ?>" autocomplete="off" required>
-                                                        </div>
-
+                                                       
 
 
 

@@ -79,7 +79,6 @@
                             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
 
                             <!-- Notification bell -->
-                            <?php include '../includes/admin-notification.php'?>
 
                         </ul>
 						<!-- notification ends -->

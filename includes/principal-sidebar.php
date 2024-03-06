@@ -16,7 +16,6 @@
             
         </li>
 
-        <li class="<?php if($page=='manage-admin') {echo 'active';} ?>"><a href="manage-principal.php"><i class="fa fa-lock"></i> <span>Manage Principal</span></a></li>
                             
     </ul>
 </nav>

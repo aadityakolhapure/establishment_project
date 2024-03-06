@@ -7,6 +7,14 @@
         <li class="<?php if ($page == 'employee') {
                         echo 'active';
                     } ?>"><a href="employees.php"><i class="ti-id-badge"></i> <span>Staff Section</span></a></li>
+        <li class="<?php if ($page == 'Hod') {
+                        echo 'active';
+                    } ?>"><a href="manage-hod.php"><i class="ti-id-badge"></i> <span>hod Section</span></a></li>
+
+        <li class="<?php if ($page == 'Principal') {
+                        echo 'active';
+                    } ?>"><a href="manage-principal.php"><i class="ti-id-badge"></i> <span>Principal Section</span></a></li>
+
 
         <li class="<?php if ($page == 'department') {
                         echo 'active';

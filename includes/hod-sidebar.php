@@ -4,6 +4,11 @@
                         echo 'active';
                     } ?>"><a href="dashboard.php"><i class="ti-dashboard"></i> <span>Dashboard</span></a></li>
 
+        <li class="<?php if ($page == 'profile') {
+                        echo 'active';
+                    } ?>"><a href="myprofile.php"><i class="ti-id-badge"></i> <span>Profile</span></a></li>
+
+
         <li class="<?php if ($page == 'employee') {
                         echo 'active';
                     } ?>"><a href="employees.php"><i class="ti-id-badge"></i> <span>Employee Section</span></a></li>
@@ -22,9 +27,6 @@
 
         </li>
 
-        <li class="<?php if ($page == 'manage-admin') {
-                        echo 'active';
-                    } ?>"><a href="manage-admin.php"><i class="fa fa-lock"></i> <span>Manage HOD</span></a></li>
-
+        
     </ul>
 </nav>

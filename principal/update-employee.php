@@ -17,8 +17,21 @@ if (strlen($_SESSION['alogin']) == 0) {
         $city = $_POST['city'];
         $country = $_POST['country'];
         $mobileno = $_POST['mobileno'];
+        $aadhar = $_POST['aadhar'];
+        $pan = $_POST['pan'];
+        $caste = $_POST['caste'];
+        $subcaste = $_POST['subcaste'];
+        $RegDate = $_POST['RegDate'];
+        $ssc = $_POST['ssc'];
+        $hsc = $_POST['hsc'];
+        $grad = $_POST['grad'];
+        $phd = $_POST['phd'];
+        $publication = $_POST['publication'];
+        $journal = $_POST['journal'];
+        $patent = $_POST['patent'];
+        $award = $_POST['award'];
 
-        $sql = "UPDATE tblemployees set FirstName=:fname,LastName=:lname,Gender=:gender,Dob=:dob,Department=:department,Address=:address,City=:city,Country=:country,Phonenumber=:mobileno where id=:eid";
+        $sql = "UPDATE tblemployees set FirstName=:fname,LastName=:lname,Gender=:gender,Dob=:dob,Department=:department,Address=:address,City=:city,Country=:country,Phonenumber=:mobileno,aadhar=:aadhar,pan=:pan,caste=:caste,subcaste=:subcaste,RegDate=:RegDate,ssc=:ssc,hsc=:hsc,grad=:grad,phd=:phd,publication=:publication,journal=:journal,patent=:patent,award=:award where id=:eid";
         $query = $dbh->prepare($sql);
         $query->bindParam(':fname', $fname, PDO::PARAM_STR);
         $query->bindParam(':lname', $lname, PDO::PARAM_STR);
@@ -30,6 +43,21 @@ if (strlen($_SESSION['alogin']) == 0) {
         $query->bindParam(':country', $country, PDO::PARAM_STR);
         $query->bindParam(':mobileno', $mobileno, PDO::PARAM_STR);
         $query->bindParam(':eid', $eid, PDO::PARAM_STR);
+        $query->bindParam(':aadhar', $aadhar, PDO::PARAM_STR);
+        $query->bindParam(':pan', $pan, PDO::PARAM_STR);
+        $query->bindParam(':caste', $caste, PDO::PARAM_STR);
+        $query->bindParam(':subcaste', $subcaste, PDO::PARAM_STR);
+        $query->bindParam(':RegDate', $RegDate, PDO::PARAM_STR);
+        $query->bindParam(':ssc', $ssc, PDO::PARAM_STR);
+        $query->bindParam(':hsc', $hsc, PDO::PARAM_STR);
+        $query->bindParam(':grad', $grad, PDO::PARAM_STR);
+        $query->bindParam(':phd', $phd, PDO::PARAM_STR);
+        $query->bindParam(':publication', $publication, PDO::PARAM_STR);
+        $query->bindParam(':journal', $journal, PDO::PARAM_STR);
+        $query->bindParam(':patent', $patent, PDO::PARAM_STR);
+        $query->bindParam(':award', $award, PDO::PARAM_STR);
+
+        // $query->bindParam(':eid', $eid, PDO::PARAM_STR);
         $query->execute();
 
         $msg = "Employee record updated Successfully";
@@ -82,7 +110,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                     <div class="menu-inner">
                         <?php
                         $page = 'employee';
-                        include '../includes/principal-sidebar.php';
+                        include '../includes/admin-sidebar.php';
                         ?>
                     </div>
                 </div>
@@ -133,7 +161,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                         <div class="col-sm-6 clearfix">
                             <div class="user-profile pull-right">
                                 <img class="avatar user-thumb" src="../assets/images/admin.png" alt="avatar">
-                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Principal <i class="fa fa-angle-down"></i></h4>
+                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown">ADMIN <i class="fa fa-angle-down"></i></h4>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="logout.php">Log Out</a>
                                 </div>
@@ -165,7 +193,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                         <form name="addemp" method="POST">
 
                                             <div class="card-body">
-
+                                                <h4 class="header-title">Update My Profile</h4>
                                                 <p class="text-muted font-14 mb-4">Please make changes on the form below in order to update your profile</p>
 
                                                 <?php
@@ -179,7 +207,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                 if ($query->rowCount() > 0) {
                                                     foreach ($results as $result) {               ?>
 
-
+                                                        <h5 class="header-title">Personal Details</h5>
                                                         <div class="form-group">
                                                             <label for="example-text-input" class="col-form-label">First Name</label>
                                                             <input class="form-control" name="firstName" value="<?php echo htmlentities($result->FirstName); ?>" type="text" required id="example-text-input">
@@ -216,11 +244,6 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Staff ID</label>
-                                                            <input class="form-control" name="empcode" type="text" autocomplete="off" readonly required value="<?php echo htmlentities($result->EmpId); ?>" id="example-text-input">
-                                                        </div>
-
-                                                        <div class="form-group">
                                                             <label for="example-text-input" class="col-form-label">Country</label>
                                                             <input class="form-control" name="country" type="text" value="<?php echo htmlentities($result->Country); ?>" autocomplete="off" required id="example-text-input">
                                                         </div>
@@ -235,8 +258,39 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                             <input class="form-control" name="city" type="text" value="<?php echo htmlentities($result->City); ?>" autocomplete="off" required>
                                                         </div>
 
+
                                                         <div class="form-group">
-                                                            <label class="col-form-label">Your Leave Type</label>
+                                                            <label for="example-text-input" class="col-form-label">Aadhar card Nos.</label>
+                                                            <input class="form-control" name="aadhar" type="tel" value="<?php echo htmlentities($result->aadhar); ?>" maxlength="12" autocomplete="off" required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">Pan card Nos.</label>
+                                                            <input class="form-control" name="pan" type="tel" value="<?php echo htmlentities($result->pan); ?>" maxlength="10" autocomplete="off" required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">Caste</label>
+                                                            <input class="form-control" name="caste" type="text" value="<?php echo htmlentities($result->caste); ?>" autocomplete="off" required id="example-text-input">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">Sub Caste</label>
+                                                            <input class="form-control" name="subcaste" type="text" value="<?php echo htmlentities($result->subcaste); ?>" autocomplete="off" required id="example-text-input">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">Staff ID</label>
+                                                            <input class="form-control" name="empcode" type="text" autocomplete="off" readonly required value="<?php echo htmlentities($result->EmpId); ?>" id="example-text-input">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">Date of joining</label>
+                                                            <input class="form-control" name="RegDate" type="text" autocomplete="off" readonly required value="<?php echo htmlentities($result->RegDate); ?>" id="example-text-input">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">Your Department</label>
                                                             <select class="custom-select" name="department" autocomplete="off">
                                                                 <option value="<?php echo htmlentities($result->Department); ?>"><?php echo htmlentities($result->Department); ?></option>
 
@@ -253,6 +307,53 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                                 } ?>
                                                             </select>
                                                         </div>
+
+                                                        <h5 class="header-title">Educational Details</h5>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">SSC Marks</label>
+                                                            <input class="form-control" name="ssc" type="tel" value="<?php echo htmlentities($result->ssc); ?>" maxlength="10" autocomplete="off" required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">HSC Marks</label>
+                                                            <input class="form-control" name="hsc" type="tel" value="<?php echo htmlentities($result->hsc); ?>" maxlength="10" autocomplete="off" required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">Graduation Marks</label>
+                                                            <input class="form-control" name="grad" type="tel" value="<?php echo htmlentities($result->grad); ?>" maxlength="10" autocomplete="off" required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">PHD Marks</label>
+                                                            <input class="form-control" name="phd" type="tel" value="<?php echo htmlentities($result->phd); ?>" maxlength="10" autocomplete="off" required>
+                                                        </div>
+
+                                                        <h5 class="header-title">Achievement</h5>
+                                                        <p class="text-muted font-14 mb-4">Write NA if there is no achievement</p>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">Publication</label>
+                                                            <input class="form-control" name="publication" type="text" value="<?php echo htmlentities($result->publication); ?>" autocomplete="off" required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">Journals</label>
+                                                            <input class="form-control" name="journal" type="text" value="<?php echo htmlentities($result->journal); ?>" autocomplete="off" required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">patent</label>
+                                                            <input class="form-control" name="patent" type="text" value="<?php echo htmlentities($result->patent); ?>" autocomplete="off" required>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">Award</label>
+                                                            <input class="form-control" name="award" type="text" value="<?php echo htmlentities($result->award); ?>" autocomplete="off" required>
+                                                        </div>
+
+
 
                                                 <?php }
                                                 } ?>
