@@ -166,6 +166,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                 <div class="card-body">
                                     <div class="data-tables datatable-dark">
                                         <center><a href="add-employee.php" class="btn btn-sm btn-info">Add New Staff</a></center>
+                                        <center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" id="exportData" onclick="exportData()">Get Data</button></center>
                                         <table id="dataTable3" class="table table-hover table-striped text-center">
                                             <thead class="text-capitalize">
                                                 <tr>
@@ -222,6 +223,9 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                     }
                                                 } ?>
 
+
+
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -252,6 +256,22 @@ if (strlen($_SESSION['alogin']) == 0) {
         <script src="../assets/js/metisMenu.min.js"></script>
         <script src="../assets/js/jquery.slimscroll.min.js"></script>
         <script src="../assets/js/jquery.slicknav.min.js"></script>
+        <script>
+            function exportData() {
+                // Use AJAX to call the PHP script when the button is clicked
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'export.php', true);
+                xhr.send();
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        // The PHP script has been executed
+                        // You can add additional handling here if needed
+                        console.log('Data exported successfully');
+                    }
+                };
+            }
+        </script>
 
         <!-- start chart js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>

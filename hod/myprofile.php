@@ -8,48 +8,28 @@ if (strlen($_SESSION['hodlogin']) == 0) {
     $eid = $_SESSION['hodlogin'];
     if (isset($_POST['update'])) {
 
-        $FirstName = $_POST['FirstName'];
-        $LastName = $_POST['LastName'];
-        $gender = $_POST['gender'];
-        $dob = $_POST['dob'];
-        $department = $_POST['department'];
-        $address = $_POST['address'];
+        $id = $_POST['id'];
+        $EmpId = $_POST['EmpId'];
+        $UserName = $_POST['UserName'];
+        $Password = $_POST['Password'];
+        $fullname = $_POST['fullname'];
+        $email = $_POST['email'];
         $city = $_POST['city'];
-        $country = $_POST['country'];
-        $mobileno = $_POST['mobileno'];
-        $aadhar = $_POST['aadhar'];
-        $pan = $_POST['pan'];
-        $caste = $_POST['caste'];
-        $subcaste = $_POST['subcaste'];
-        $updationDate = $_POST['RegDate'];
-        $ssc = $_POST['ssc'];
-        $hsc = $_POST['hsc'];
-        $grad = $_POST['grad'];
-        $phd = $_POST['phd'];
+        $updationDate = $_POST['updationDate'];
         // $publication = $_POST['publication'];
         // $journal = $_POST['journal'];
         // $patent = $_POST['patent'];
         // $award = $_POST['award'];
-        $sql = "update hod set FirstName=:FirstName,LastName=:LastName,Gender=:gender,Dob=:dob,Department=:department,Address=:address,City=:city,Country=:country,Phonenumber=:mobileno,aadhar=:aadhar,pan=:pan,caste=:caste,subcaste=:subcaste,updationDate=:RegDate,ssc=:ssc,hsc=:hsc,grad=:grad,phd=:phd where EmailId=:eid";
+        $sql = "update hod set id=:id,EmpId=:EmpId,UserName=:UserName,Password=:Password,fullname=:fullname,email=:email,city=:city,updationDate=:updationDate where email=:eid";
         $query = $dbh->prepare($sql);
-        $query->bindParam(':FirstName', $FirstName, PDO::PARAM_STR);
-        $query->bindParam(':LastName', $LastName, PDO::PARAM_STR);
-        $query->bindParam(':gender', $gender, PDO::PARAM_STR);
-        $query->bindParam(':dob', $dob, PDO::PARAM_STR);
-        $query->bindParam(':department', $department, PDO::PARAM_STR);
-        $query->bindParam(':address', $address, PDO::PARAM_STR);
+        $query->bindParam(':id', $id, PDO::PARAM_STR);
+        $query->bindParam(':EmpId', $EmpId, PDO::PARAM_STR);
+        $query->bindParam(':UserName', $UserName, PDO::PARAM_STR);
+        $query->bindParam(':Password', $Password, PDO::PARAM_STR);
+        $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
+        $query->bindParam(':email', $email, PDO::PARAM_STR);
         $query->bindParam(':city', $city, PDO::PARAM_STR);
-        $query->bindParam(':country', $country, PDO::PARAM_STR);
-        $query->bindParam(':mobileno', $mobileno, PDO::PARAM_STR);
-        $query->bindParam(':aadhar', $aadhar, PDO::PARAM_STR);
-        $query->bindParam(':pan', $pan, PDO::PARAM_STR);
-        $query->bindParam(':caste', $caste, PDO::PARAM_STR);
-        $query->bindParam(':subcaste', $subcaste, PDO::PARAM_STR);
-        $query->bindParam(':RegDate', $updationDate, PDO::PARAM_STR);
-        $query->bindParam(':ssc', $ssc, PDO::PARAM_STR);
-        $query->bindParam(':hsc', $hsc, PDO::PARAM_STR);
-        $query->bindParam(':grad', $grad, PDO::PARAM_STR);
-        $query->bindParam(':phd', $phd, PDO::PARAM_STR);
+        $query->bindParam(':updationDate', $updationDate, PDO::PARAM_STR);
         // $query->bindParam(':publication', $publication, PDO::PARAM_STR);
         // $query->bindParam(':journal', $journal, PDO::PARAM_STR);
         // $query->bindParam(':patent', $patent, PDO::PARAM_STR);
@@ -182,8 +162,8 @@ if (strlen($_SESSION['hodlogin']) == 0) {
                                                 <p class="text-muted font-14 mb-4">Please make changes on the form below in order to update your profile</p>
 
                                                 <?php
-                                                $eid = $_SESSION['emplogin'];
-                                                $sql = "SELECT * from  hod where EmailId=:eid";
+                                                $eid = $_SESSION['hodlogin'];
+                                                $sql = "SELECT * from  hod where email;=:eid";
                                                 $query = $dbh->prepare($sql);
                                                 $query->bindParam(':eid', $eid, PDO::PARAM_STR);
                                                 $query->execute();
@@ -195,128 +175,49 @@ if (strlen($_SESSION['hodlogin']) == 0) {
                                                         <h5 class="header-title">Personal Details</h5>
 
                                                         <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">First Name</label>
-                                                            <input class="form-control" name="FirstName" value="<?php echo htmlentities($result->FirstName); ?>" type="text" required id="example-text-input">
+                                                            <label for="example-text-input" class="col-form-label">Id</label>
+                                                            <input class="form-control" name="id" value="<?php echo htmlentities($result->id); ?>" type="text" required id="example-text-input">
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Last Name</label>
-                                                            <input class="form-control" name="LastName" value="<?php echo htmlentities($result->LastName); ?>" type="text" autocomplete="off" required id="example-text-input">
+                                                            <label for="example-text-input" class="col-form-label">User Name</label>
+                                                            <input class="form-control" name="UserName" value="<?php echo htmlentities($result->UserName); ?>" type="text" autocomplete="off" required id="example-text-input">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input" class="col-form-label">Full Name</label>
+                                                            <input class="form-control" name="fullname" value="<?php echo htmlentities($result->fullname); ?>" type="text" autocomplete="off" required id="example-text-input">
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label for="example-email-input" class="col-form-label">Email</label>
-                                                            <input class="form-control" name="email" type="email" value="<?php echo htmlentities($result->EmailId); ?>" readonly autocomplete="off" required id="example-email-input">
+                                                            <input class="form-control" name="email" type="email" value="<?php echo htmlentities($result->email); ?>" readonly autocomplete="off" required id="example-email-input">
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label class="col-form-label">Gender</label>
-                                                            <select class="custom-select" name="gender" autocomplete="off">
-                                                                <option value="<?php echo htmlentities($result->Gender); ?>"><?php echo htmlentities($result->Gender); ?></option>
-                                                                <option value="Male">Male</option>
-                                                                <option value="Female">Female</option>
-                                                                <option value="Other">Other</option>
-                                                            </select>
-                                                        </div>
+                                                       
 
-                                                        <div class="form-group">
-                                                            <label for="example-date-input" class="col-form-label">D.O.B</label>
-                                                            <input class="form-control" type="date" name="dob" id="birthdate" value="<?php echo htmlentities($result->Dob); ?>">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Contact Number</label>
-                                                            <input class="form-control" name="mobileno" type="tel" value="<?php echo htmlentities($result->Phonenumber); ?>" maxlength="10" autocomplete="off" required>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Country</label>
-                                                            <input class="form-control" name="country" type="text" value="<?php echo htmlentities($result->Country); ?>" autocomplete="off" required id="example-text-input">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Address</label>
-                                                            <input class="form-control" name="address" type="text" value="<?php echo htmlentities($result->Address); ?>" autocomplete="off" required>
-                                                        </div>
-
+                                                        
                                                         <div class="form-group">
                                                             <label for="example-text-input" class="col-form-label">City</label>
-                                                            <input class="form-control" name="city" type="text" value="<?php echo htmlentities($result->City); ?>" autocomplete="off" required>
+                                                            <input class="form-control" name="city" type="text" value="<?php echo htmlentities($result->city); ?>" autocomplete="off" required>
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Aadhar card Nos.</label>
-                                                            <input class="form-control" name="aadhar" type="tel" value="<?php echo htmlentities($result->aadhar); ?>" maxlength="12" autocomplete="off" required>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Pan card Nos.</label>
-                                                            <input class="form-control" name="pan" type="tel" value="<?php echo htmlentities($result->pan); ?>" maxlength="10" autocomplete="off" required>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Caste</label>
-                                                            <input class="form-control" name="caste" type="text" value="<?php echo htmlentities($result->caste); ?>" autocomplete="off" required id="example-text-input">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Sub Caste</label>
-                                                            <input class="form-control" name="subcaste" type="text" value="<?php echo htmlentities($result->subcaste); ?>" autocomplete="off" required id="example-text-input">
-                                                        </div>
+                                                        
 
                                                         <div class="form-group">
                                                             <label for="example-text-input" class="col-form-label">Employee ID</label>
-                                                            <input class="form-control" name="empcode" type="text" autocomplete="off" readonly required value="<?php echo htmlentities($result->EmpId); ?>" id="example-text-input">
+                                                            <input class="form-control" name="EmpId" type="text" autocomplete="off" readonly required value="<?php echo htmlentities($result->EmpId); ?>" id="example-text-input">
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label for="example-text-input" class="col-form-label">Date of joining</label>
-                                                            <input class="form-control" name="RegDate" type="text" autocomplete="off" readonly required value="<?php echo htmlentities($result->RegDate); ?>" id="example-text-input">
+                                                            <input class="form-control" name="updationDate" type="text" autocomplete="off" readonly required value="<?php echo htmlentities($result->updationDate); ?>" id="example-text-input">
                                                         </div>
 
 
 
-                                                        <div class="form-group">
-                                                            <label class="col-form-label">Selected Department</label>
-                                                            <select class="custom-select" name="department" autocomplete="off">
-                                                                <option value="<?php echo htmlentities($result->Department); ?>"><?php echo htmlentities($result->Department); ?></option>
 
-                                                                <?php $sql = "SELECT DepartmentName from tbldepartments";
-                                                                $query = $dbh->prepare($sql);
-                                                                $query->execute();
-                                                                $results = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                $cnt = 1;
-                                                                if ($query->rowCount() > 0) {
-                                                                    foreach ($results as $resultt) {
-                                                                ?>
-                                                                        <option value="<?php echo htmlentities($resultt->DepartmentName); ?>"><?php echo htmlentities($resultt->DepartmentName); ?></option>
-                                                                <?php }
-                                                                } ?>
-                                                            </select>
-                                                        </div>
-
-                                                        <h5 class="header-title">Education Details</h5>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">SSC Marks</label>
-                                                            <input class="form-control" name="ssc" type="tel" value="<?php echo htmlentities($result->ssc); ?>" maxlength="10" autocomplete="off" required>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">HSC Marks</label>
-                                                            <input class="form-control" name="hsc" type="tel" value="<?php echo htmlentities($result->hsc); ?>" maxlength="10" autocomplete="off" required>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">Graduation Marks</label>
-                                                            <input class="form-control" name="grad" type="tel" value="<?php echo htmlentities($result->grad); ?>" maxlength="10" autocomplete="off" required>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="example-text-input" class="col-form-label">PHD Marks</label>
-                                                            <input class="form-control" name="phd" type="tel" value="<?php echo htmlentities($result->phd); ?>" maxlength="10" autocomplete="off" required>
-                                                        </div>
-
+                                                
                                                        
 
 
