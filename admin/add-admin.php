@@ -2,9 +2,7 @@
     session_start();
     error_reporting(0);
     include('../includes/dbconn.php');
-    if(strlen($_SESSION['alogin'])==0){   
-    header('location:index.php');
-    } else {
+    
     if(isset($_POST['add'])){
     $fullname=$_POST['fullname']; 
     $email=$_POST['email']; 
@@ -65,6 +63,7 @@
             document.addemp.confirmpassword.focus();
             return false;
                 } return true;
+
         }
     </script>
 
@@ -100,167 +99,75 @@
         }
     </script>
 </head>
-
 <body>
     <!-- preloader area start -->
     <div id="preloader">
         <div class="loader"></div>
     </div>
     <!-- preloader area end -->
-    
-    <div class="page-container">
-        <!-- sidebar menu area start -->
-        <div class="sidebar-menu">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <a href="dashboard.php"><img src="../assets/images/icon/logo_w.png" alt="logo"></a>
-                </div>
-            </div>
-            <div class="main-menu">
-                <div class="menu-inner">
-                    <?php
-                        $page='manage-admin';
-                        include '../includes/admin-sidebar.php';
-                    ?>
-                </div>
+    <!-- login area start -->
+    <div class="login-area">
+        <div class="container">
+            <div class="login-box ptb--100">
+                <form name="signin" method="POST">
+                    <div class="login-form-head">
+                        <h4>ADMIN PANEL</h4>
+                        <p>Establishment Section System</p>
+                    </div>
+                    <div class="login-form-body">
+                        <div class="form-gp">
+                            <label for="exampleInputEmail1">Username</label>
+                            <input type="text" id="exampleInputEmail1" name="username" autocomplete="off" required>
+                            <i class="ti-user"></i>
+                            <div class="text-danger"></div>
+                        </div>
+                        <div class="form-gp">
+                            <label for="exampleInputEmail1">full name</label>
+                            <input type="text" id="exampleInputEmail1" name="fullname" autocomplete="off" required>
+                            <i class="ti-user"></i>
+                            <div class="text-danger"></div>
+                        </div>
+                        <div class="form-gp">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input type="text" id="exampleInputEmail1" name="email" autocomplete="off" required>
+                            <i class="ti-user"></i>
+                            <div class="text-danger"></div>
+                        </div>
+                        <div class="form-gp">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" id="exampleInputPassword1" name="password" autocomplete="off" required>
+                            <i class="ti-lock"></i>
+                            <div class="text-danger"></div>
+                        </div>
+                        <!-- <div class="form-gp">
+                            <label for="exampleInputPassword1">Confirm Password</label>
+                            <input type="password" id="exampleInputPassword1" name="confirmpassword" autocomplete="off" required>
+                            <i class="ti-lock"></i>
+                            <div class="text-danger"></div>
+                        </div> -->
+
+                        <!-- <div class="col-6 text-right">
+                            <a href="signup.php">SIGNUP</a>
+                        </div> -->
+
+                        <div class="submit-btn-area">
+                            <button id="form_submit" type="submit" name="add">Submit <i class="ti-arrow-right"></i></button>
+
+                        </div>
+
+                        <div class="col-6 text-right">
+                            <a href="index.php">Already signup?</a>
+                        </div>
+
+                        <div class="form-footer text-center mt-5">
+                            <p class="text-muted"><a href="index.php"><i class="ti-arrow-left"></i> Go Back</a></p>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-        <!-- sidebar menu area end -->
-        <!-- main content area start -->
-        <div class="main-content">
-            <!-- header area start -->
-            <div class="header-area">
-                <div class="row align-items-center">
-                    <!-- nav and search button -->
-                    <div class="col-md-6 col-sm-8 clearfix">
-                        <div class="nav-btn pull-left">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        
-                    </div>
-                    <!-- profile info & task notification -->
-                    <div class="col-md-6 col-sm-4 clearfix">
-                        <ul class="notification-area pull-right">
-                            <li id="full-view"><i class="ti-fullscreen"></i></li>
-                            <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
-
-                            <!-- Notification bell -->
-                            <?php include '../includes/admin-notification.php'?>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- header area end -->
-            <!-- page title area start -->
-            <div class="page-title-area">
-                <div class="row align-items-center">
-                    <div class="col-sm-6">
-                        <div class="breadcrumbs-area clearfix">
-                            <h4 class="page-title pull-left">Add Admin Section</h4>
-                            <ul class="breadcrumbs pull-left"> 
-                                <li><a href="manage-admin.php">Manage Admin</a></li>
-                                <li><span>Add</span></li>
-                                
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="col-sm-6 clearfix">
-                        <div class="user-profile pull-right">
-                            <img class="avatar user-thumb" src="../assets/images/admin.png" alt="avatar">
-                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">ADMIN <i class="fa fa-angle-down"></i></h4>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="logout.php">Log Out</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- page title area end -->
-            <div class="main-content-inner">
-                
-                
-                <!-- row area start -->
-                <div class="row">
-                <div class="col-lg-6 col-ml-12">
-                        <div class="row">
-                            <!-- Input form start -->
-                            <div class="col-12 mt-5">
-                            <?php if($error){?><div class="alert alert-danger alert-dismissible fade show"><strong>Info: </strong><?php echo htmlentities($error); ?>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            
-                             </div><?php } 
-                                 else if($msg){?><div class="alert alert-success alert-dismissible fade show"><strong>Info: </strong><?php echo htmlentities($msg); ?> 
-                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                 </div><?php }?>
-                                <div class="card">
-                                <form name="addemp" method="POST">
-
-                                    <div class="card-body">
-                                        <p class="text-muted font-14 mb-4">Please fill up the form in order to add new system administrator</p>
-                                    
-
-                                        <div class="form-group">
-                                            <label for="example-text-input" class="col-form-label">Full Name</label>
-                                            <input class="form-control" name="fullname"  type="text" required id="example-text-input">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="example-email-input" class="col-form-label">Email ID</label>
-                                            <input class="form-control" name="email" type="email"  autocomplete="off" required id="example-email-input">
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <label for="example-text-input" class="col-form-label">Username</label>
-                                            <input class="form-control" name="username" type="text"   autocomplete="off" required id="example-text-input">
-                                        </div>
-
-                                        <h4>Setting Passwords</h4>
-
-                                        <div class="form-group">
-                                            <label for="example-text-input" class="col-form-label">Password</label>
-                                            <input class="form-control" name="password" type="password" autocomplete="off" required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="example-text-input" class="col-form-label">Confirmation Password</label>
-                                            <input class="form-control" name="confirmpassword" type="password" autocomplete="off" required>
-                                        </div>
-
-                        
-
-                                        <button class="btn btn-primary" name="add" id="update" type="submit" onclick="return valid();">PROCEED</button>
-                                        
-                                    </div>
-                                </form>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <!-- Input Form Ending point -->
-                    
-                </div>
-                <!-- row area end -->
-                
-                </div>
-                <!-- row area start-->
-            </div>
-            <?php include '../includes/footer.php' ?>
-        <!-- footer area end-->
-        </div>
-        <!-- main content area end -->
-
-        
     </div>
+    <!-- login area end -->
 
     <!-- jquery latest version -->
     <script src="../assets/js/vendor/jquery-2.2.4.min.js"></script>
@@ -272,21 +179,6 @@
     <script src="../assets/js/jquery.slimscroll.min.js"></script>
     <script src="../assets/js/jquery.slicknav.min.js"></script>
 
-    <!-- start chart js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <!-- start highcharts js -->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <!-- start zingchart js -->
-    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-    <script>
-    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
-    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
-    </script>
-    <!-- all line chart activation -->
-    <script src="assets/js/line-chart.js"></script>
-    <!-- all pie chart -->
-    <script src="assets/js/pie-chart.js"></script>
-    
     <!-- others plugins -->
     <script src="../assets/js/plugins.js"></script>
     <script src="../assets/js/scripts.js"></script>
@@ -294,4 +186,4 @@
 
 </html>
 
-<?php } ?>
+<?php  ?>

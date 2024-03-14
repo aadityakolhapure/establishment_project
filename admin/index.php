@@ -89,6 +89,9 @@ if (isset($_POST['signin'])) {
                         <div class="col-6 text-right">
                             <a href="password-recovery.php">Forgot Password?</a>
                         </div>
+                        <div class="col-6 text-right">
+                            <a href="add-admin.php">Sign up?</a>
+                        </div>
                         <div class="form-footer text-center mt-5">
                             <p class="text-muted"><a href="../index.php"><i class="ti-arrow-left"></i> Go Back</a></p>
                         </div>
